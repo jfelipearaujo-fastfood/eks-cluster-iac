@@ -1,0 +1,38 @@
+formatter: "markdown table"
+
+content: |-
+  {{ .Header }}
+  {{ .Requirements }}
+  {{ .Providers }}
+  {{ .Inputs }}
+  {{ .Modules }}
+  {{ .Resources }}
+  {{ .Outputs }}
+  {{ .Footer }}
+
+  <br/><br/><br/>
+
+  # module\_eks\_cluster
+  {{ include "../docs/eks_cluster.md" }}
+
+  <br/><br/><br/>
+
+  # module\_load\_balancer
+  {{ include "../docs/load_balancer.md" }}
+
+  <br/><br/><br/>
+
+  # module\_network
+  {{ include "../docs/network.md" }}
+
+output:
+  file: ../README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+recursive:
+  enabled: true
+  path: /modules
