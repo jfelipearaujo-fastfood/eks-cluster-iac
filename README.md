@@ -1,4 +1,4 @@
-# fast-food-k8s-cluster
+# Fast-Food k8s Cluster
 
 <!-- BEGIN_TF_DOCS -->
 
@@ -38,3 +38,10 @@ No resources.
 
 No outputs.
 <!-- END_TF_DOCS -->
+
+## Modules
+
+- [eks_cluster](./docs/eks_cluster.md)
+- [load_balancer](./docs/load_balancer.md)
+- [network](./docs/network.md)
+- [node](./docs/node.md)
