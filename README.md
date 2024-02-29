@@ -1,5 +1,16 @@
 # Fast-Food k8s Cluster
 
+Steps
+- terraform plan (with vars -> disabled)
+- terraform apply
+- wait for the cluster to be ready
+- attach EKS cluster to kubectl
+- kubectl apply -f k8s/
+- wait for the pods to be ready
+- get mandatory ARNs
+- terraform plan (with vars -> enabled)
+- terraform apply (this will deploy the API Gateway)
+
 <!-- BEGIN_TF_DOCS -->
 
 ## Requirements
