@@ -30,6 +30,7 @@ No providers.
 | <a name="module_eks_cluster"></a> [eks\_cluster](#module\_eks\_cluster) | ./modules/eks_cluster | n/a |
 | <a name="module_load_balancer"></a> [load\_balancer](#module\_load\_balancer) | ./modules/load_balancer | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
+| <a name="module_node"></a> [node](#module\_node) | ./modules/node | n/a |
 ## Resources
 
 No resources.

@@ -15,19 +15,17 @@ module "eks_cluster" {
   private_subnets = module.network.private_subnets
 }
 
-# module "node" {
-#   source = "./modules/node"
+module "node" {
+  source = "./modules/node"
 
-#   cluster_name = module.eks_cluster.cluster_name
+  cluster_name = module.eks_cluster.cluster_name
 
-#   private_subnet_1a = module.network.private_subnet_1a
-#   private_subnet_1b = module.network.private_subnet_1b
-#   private_subnet_1c = module.network.private_subnet_1c
+  private_subnets = module.network.private_subnets
 
-#   desired_size = var.desired_size
-#   min_size     = var.min_size
-#   max_size     = var.max_size
-# }
+  desired_size = var.desired_size
+  min_size     = var.min_size
+  max_size     = var.max_size
+}
 
 module "load_balancer" {
   source = "./modules/load_balancer"

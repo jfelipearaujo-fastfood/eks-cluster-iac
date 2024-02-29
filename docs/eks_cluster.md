@@ -1,3 +1,5 @@
+# Module EKS Cluster
+
 <!-- BEGIN_TF_DOCS -->
 
 ## Requirements

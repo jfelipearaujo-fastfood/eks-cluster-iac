@@ -2,6 +2,12 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "20.4.0"
 
+  create_iam_role = true
+
+  enable_cluster_creator_admin_permissions = true
+
+  authentication_mode = "API_AND_CONFIG_MAP"
+
   cluster_name    = var.cluster_name
   cluster_version = var.kubernetes_version
 
@@ -34,28 +40,6 @@ module "eks" {
     instance_types = ["t3.medium"]
     iam_role_additional_policies = {
       AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-    }
-  }
-
-  enable_cluster_creator_admin_permissions = true
-
-  authentication_mode = "API_AND_CONFIG_MAP"
-
-  eks_managed_node_groups = {
-    blue = {
-      node_group_name = format("%s-blue-node-group", var.cluster_name)
-      min_size        = 1
-      max_size        = 10
-      desired_size    = 1
-    }
-    green = {
-      node_group_name = format("%s-green-node-group", var.cluster_name)
-      min_size        = 1
-      max_size        = 10
-      desired_size    = 1
-
-      instance_types = ["t3.medium"]
-      capacity_type  = "SPOT"
     }
   }
 
