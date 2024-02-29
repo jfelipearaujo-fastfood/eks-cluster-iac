@@ -10,28 +10,33 @@ module "eks_cluster" {
 
   cluster_name       = var.cluster_name
   kubernetes_version = var.kubernetes_version
+  cluster_vpc        = module.network.cluster_vpc
 
-  vpc_id          = module.network.vpc_id
-  private_subnets = module.network.private_subnets
+  private_subnet_1a = module.network.private_subnet_1a
+  private_subnet_1b = module.network.private_subnet_1b
+  public_subnet_1a  = module.network.public_subnet_1a
+  public_subnet_1b  = module.network.public_subnet_1b
 }
 
 module "node" {
   source = "./modules/node"
 
-  cluster_name = module.eks_cluster.cluster_name
+  cluster_name = var.cluster_name
+  eks_cluster  = module.eks_cluster.eks_cluster
 
-  private_subnets = module.network.private_subnets
-
-  desired_size = var.desired_size
-  min_size     = var.min_size
-  max_size     = var.max_size
+  nodes_instances_sizes = var.nodes_instances_sizes
+  auto_scale_options    = var.auto_scale_options
+  auto_scale_cpu        = var.auto_scale_cpu
+  private_subnet_1a     = module.network.private_subnet_1a
+  private_subnet_1b     = module.network.private_subnet_1b
 }
 
-module "load_balancer" {
-  source = "./modules/load_balancer"
+# module "gateway" {
+#   source = "./modules/gateway"
 
-  cluster_name      = var.cluster_name
-  region            = var.region
-  vpc_id            = module.network.vpc_id
-  oidc_provider_arn = module.eks_cluster.oidc_provider_arn
-}
+#   cluster_name      = var.cluster_name
+#   lb_arn            = var.lb_arn
+#   vpc_id            = module.network.cluster_vpc.id
+#   private_subnet_1a = module.network.private_subnet_1a
+#   private_subnet_1b = module.network.private_subnet_1b
+# }

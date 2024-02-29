@@ -1,24 +1,19 @@
-output "vpc_id" {
-  description = "The ID of the VPC"
-  value       = module.vpc.vpc_id
+output "cluster_vpc" {
+  value = aws_vpc.cluster_vpc
 }
 
-output "vpc_arn" {
-  description = "The ARN of the VPC"
-  value       = module.vpc.vpc_arn
+output "private_subnet_1a" {
+  value = aws_subnet.private_a
 }
 
-output "private_subnets" {
-  description = "List of IDs of private subnets"
-  value       = module.vpc.private_subnets
+output "private_subnet_1b" {
+  value = aws_subnet.private_b
 }
 
-output "private_subnet_arns" {
-  description = "List of ARNs of private subnets"
-  value       = module.vpc.private_subnet_arns
+output "public_subnet_1a" {
+  value = aws_subnet.public_a
 }
 
-output "private_subnets_cidr_blocks" {
-  description = "List of cidr_blocks of private subnets"
-  value       = module.vpc.private_subnets_cidr_blocks
+output "public_subnet_1b" {
+  value = aws_subnet.public_b
 }

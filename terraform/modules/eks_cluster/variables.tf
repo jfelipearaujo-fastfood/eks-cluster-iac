@@ -1,10 +1,13 @@
 variable "cluster_name" {}
 
-variable "vpc_id" {}
-
 variable "kubernetes_version" {}
 
-variable "private_subnets" {
-  description = "VPC Private Subnets which EKS cluster is deployed in"
-  type        = list(any)
-}
+variable "cluster_vpc" {}
+
+variable "private_subnet_1a" {}
+
+variable "private_subnet_1b" {}
+
+variable "public_subnet_1a" {}
+
+variable "public_subnet_1b" {}

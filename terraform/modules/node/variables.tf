@@ -1,12 +1,13 @@
 variable "cluster_name" {}
 
-variable "private_subnets" {
-  description = "VPC Private Subnets which EKS cluster is deployed in"
-  type        = list(any)
-}
+variable "eks_cluster" {}
 
-variable "desired_size" {}
+variable "nodes_instances_sizes" {}
 
-variable "max_size" {}
+variable "auto_scale_options" {}
 
-variable "min_size" {}
+variable "auto_scale_cpu" {}
+
+variable "private_subnet_1a" {}
+
+variable "private_subnet_1b" {}

@@ -36,3 +36,11 @@ destroy:
 gen-tf-docs:
 	@echo "Generating Terraform Docs..."
 	@terraform-docs markdown table terraform
+
+former:
+	@echo "Initializing Terraform..."
+	@cd terraformer \
+		&& terraform init
+	@echo "Running Terraformer..."
+	@cd terraformer \
+		&& terraformer import aws -o terraformer --regions=us-east-1 --resources=load-balancer
