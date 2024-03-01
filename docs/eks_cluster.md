@@ -14,10 +14,16 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | n/a | `any` | n/a | yes |
-| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | n/a | `any` | n/a | yes |
-| <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | VPC Private Subnets which EKS cluster is deployed in | `list(any)` | n/a | yes |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `any` | n/a | yes |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | n/a | yes |
+| <a name="input_kubernetes_version"></a> [kubernetes\_version](#input\_kubernetes\_version) | The version of Kubernetes to use for the EKS cluster | `string` | n/a | yes |
+| <a name="input_private_subnet_1a"></a> [private\_subnet\_1a](#input\_private\_subnet\_1a) | The ID of the private subnet in the first availability zone | `string` | n/a | yes |
+| <a name="input_private_subnet_1b"></a> [private\_subnet\_1b](#input\_private\_subnet\_1b) | The ID of the private subnet in the second availability zone | `string` | n/a | yes |
+| <a name="input_private_subnet_1c"></a> [private\_subnet\_1c](#input\_private\_subnet\_1c) | The ID of the private subnet in the third availability zone | `string` | n/a | yes |
+| <a name="input_public_subnet_1a"></a> [public\_subnet\_1a](#input\_public\_subnet\_1a) | The ID of the public subnet in the first availability zone | `string` | n/a | yes |
+| <a name="input_public_subnet_1b"></a> [public\_subnet\_1b](#input\_public\_subnet\_1b) | The ID of the public subnet in the second availability zone | `string` | n/a | yes |
+| <a name="input_public_subnet_1c"></a> [public\_subnet\_1c](#input\_public\_subnet\_1c) | The ID of the public subnet in the third availability zone | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | The default region to use for AWS | `string` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 ## Modules
 
 No modules.
@@ -38,6 +44,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_eks_cluster"></a> [eks\_cluster](#output\_eks\_cluster) | n/a |
-| <a name="output_security_group"></a> [security\_group](#output\_security\_group) | n/a |
+| <a name="output_eks_cluster"></a> [eks\_cluster](#output\_eks\_cluster) | values for the EKS cluster |
+| <a name="output_security_group"></a> [security\_group](#output\_security\_group) | values for the security group |
 <!-- END_TF_DOCS -->
