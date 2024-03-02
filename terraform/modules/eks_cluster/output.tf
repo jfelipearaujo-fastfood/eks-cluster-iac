@@ -1,6 +1,6 @@
 output "eks_cluster" {
   description = "values for the EKS cluster"
-  value       = aws_eks_cluster.eks_cluster
+  value       = module.eks_cluster
 }
 
 output "security_group" {
