@@ -21,8 +21,8 @@ module "allow_eks_access_iam_policy" {
         ]
         Effect   = "Allow"
         Resource = "*",
-        Condition: {
-          StringEquals: {
+        Condition = {
+          "StringEquals" = {
             "iam:PassedToService": "eks.amazonaws.com"
           }
         }
