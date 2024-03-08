@@ -7,7 +7,9 @@ variable "tags" {
   description = "The default tags to use for AWS resources"
   type        = map(string)
   default = {
-    App = "eks-cluster"
+    App = "cluster"
+    # Blueprint  = "cluster"
+    # GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
   }
 }
 
@@ -20,21 +22,19 @@ variable "cluster_name" {
   default     = "fastfood"
 }
 
-variable "kubernetes_version" {
+variable "cluster_version" {
   description = "The version of Kubernetes to use"
   default     = "1.29"
 }
 
-variable "nodes_instances_sizes" {
-  default = [
-    "t2.micro"
-  ]
+variable "vpc_cidr" {
+  type        = string
+  description = "The CIDR block for the VPC"
+  default     = "10.0.0.0/16"
 }
 
-variable "auto_scale_options" {
-  default = {
-    min     = 1
-    max     = 5
-    desired = 1
-  }
+variable "azs" {
+  type        = list(string)
+  description = "The availability zones to use for the VPC"
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }

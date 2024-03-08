@@ -11,7 +11,7 @@ content: |-
   {{ .Footer }}
 
 output:
-  file: ../../../docs/node.md
+  file: ../../../docs/cluster.md
   mode: inject
   template: |-
     <!-- BEGIN_TF_DOCS -->

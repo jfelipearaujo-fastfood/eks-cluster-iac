@@ -3,36 +3,36 @@ module "network" {
 
   cluster_name = var.cluster_name
   region       = var.region
+
+  vpc_cidr = var.vpc_cidr
+  azs      = var.azs
 }
 
-module "eks_cluster" {
-  source = "./modules/eks_cluster"
+module "cluster" {
+  source = "./modules/cluster"
 
   region = var.region
 
-  cluster_name       = var.cluster_name
-  kubernetes_version = var.kubernetes_version
-  vpc_id             = module.network.cluster_vpc.id
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
 
-  private_subnet_1a = module.network.private_subnet_1a
-  private_subnet_1b = module.network.private_subnet_1b
-  private_subnet_1c = module.network.private_subnet_1c
-
-  public_subnet_1a = module.network.public_subnet_1a
-  public_subnet_1b = module.network.public_subnet_1b
-  public_subnet_1c = module.network.public_subnet_1c
+  vpc_id          = module.network.vpc_id
+  private_subnets = module.network.private_subnets
 }
 
-module "node" {
-  source = "./modules/node"
+module "addon" {
+  source = "./modules/addon"
 
-  cluster_name = var.cluster_name
-  eks_cluster  = module.eks_cluster.eks_cluster
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
 
-  nodes_instances_sizes = var.nodes_instances_sizes
-  auto_scale_options    = var.auto_scale_options
+  vpc_id = module.network.vpc_id
 
-  private_subnet_1a = module.network.private_subnet_1a
-  private_subnet_1b = module.network.private_subnet_1b
-  private_subnet_1c = module.network.private_subnet_1c
+  cluster_endpoint  = module.cluster.cluster_endpoint
+  oidc_provider_arn = module.cluster.oidc_provider_arn
+
+  depends_on = [
+    module.cluster,
+    module.network
+  ]
 }
