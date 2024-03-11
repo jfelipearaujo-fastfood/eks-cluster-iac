@@ -12,6 +12,14 @@ module "eks_blueprints_addons" {
   enable_aws_efs_csi_driver           = true
   enable_aws_load_balancer_controller = true
 
+  kube_prometheus_stack = {
+    name          = "kube-prometheus-stack"
+    chart_version = "57.0.1"
+    repository    = "https://prometheus-community.github.io/helm-charts"
+    namespace     = "kube-prometheus-stack"
+    values        = [templatefile("${path.module}/values.yaml", {})]
+  }
+
   eks_addons = {
     aws-ebs-csi-driver = {
       most_recent              = true
