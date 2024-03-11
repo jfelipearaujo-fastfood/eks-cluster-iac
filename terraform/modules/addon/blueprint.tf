@@ -8,6 +8,7 @@ module "eks_blueprints_addons" {
   oidc_provider_arn = var.oidc_provider_arn
 
   enable_metrics_server               = true
+  enable_kube_prometheus_stack = true
   enable_aws_efs_csi_driver           = true
   enable_aws_load_balancer_controller = true
 
