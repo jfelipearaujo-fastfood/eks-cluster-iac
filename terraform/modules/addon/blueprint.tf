@@ -8,17 +8,8 @@ module "eks_blueprints_addons" {
   oidc_provider_arn = var.oidc_provider_arn
 
   enable_metrics_server               = true
-  enable_kube_prometheus_stack        = true
   enable_aws_efs_csi_driver           = true
   enable_aws_load_balancer_controller = true
-
-  kube_prometheus_stack = {
-    name          = "kube-prometheus-stack"
-    chart_version = "57.0.1"
-    repository    = "https://prometheus-community.github.io/helm-charts"
-    namespace     = "kube-prometheus-stack"
-    values        = [templatefile("${path.module}/values.yaml", {})]
-  }
 
   eks_addons = {
     aws-ebs-csi-driver = {
@@ -27,17 +18,22 @@ module "eks_blueprints_addons" {
     }
     coredns = {
       most_recent = true
+
+      timeouts = {
+        create = "25m"
+        delete = "10m"
+      }
     }
     kube-proxy = {
       most_recent = true
     }
     vpc-cni = {
+      most_recent = true
       # Specify the VPC CNI addon should be deployed before compute to ensure
       # the addon is configured before data plane compute resources are created
       # See README for further details
       service_account_role_arn = module.vpc_cni_irsa.iam_role_arn
       before_compute           = true
-      most_recent              = true
       configuration_values = jsonencode({
         env = {
           # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
