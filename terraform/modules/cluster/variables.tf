@@ -13,6 +13,16 @@ variable "cluster_version" {
   description = "The version of Kubernetes to use for the EKS cluster"
 }
 
+variable "cluster_namespace" {
+  type        = string
+  description = "The namespace to use for the EKS cluster"
+}
+
+variable "cluster_service_account_name" {
+  type        = string
+  description = "The name of the service account to use for the EKS cluster"
+}
+
 variable "vpc_id" {
   type        = string
   description = "The ID of the VPC"
