@@ -24,3 +24,36 @@ module "eks" {
     }
   }
 }
+
+resource "kubernetes_namespace_v1" "namespace" {
+  metadata {
+    name = var.cluster_namespace
+  }
+
+  depends_on = [
+    module.eks
+  ]
+}
+
+resource "aws_iam_role" "service_account_role" {
+  name = "${var.cluster_name}-service-account-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Federated = module.eks.oidc_provider_arn
+        }
+        Action = "sts:AssumeRoleWithWebIdentity"
+        Condition = {
+          StringEquals = {
+            "${module.eks.oidc_provider}:aud" : "sts.amazonaws.com",
+            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:${var.cluster_namespace}:${var.cluster_service_account_name}"
+          }
+        }
+      },
+    ]
+  })
+}

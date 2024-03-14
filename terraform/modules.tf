@@ -13,11 +13,20 @@ module "cluster" {
 
   region = var.region
 
-  cluster_name    = var.cluster_name
-  cluster_version = var.cluster_version
+  cluster_name                 = var.cluster_name
+  cluster_version              = var.cluster_version
+  cluster_namespace            = "fastfood"
+  cluster_service_account_name = "sa-fastfood"
 
   vpc_id          = module.network.vpc_id
   private_subnets = module.network.private_subnets
+}
+
+module "storage" {
+  source = "./modules/storage"
+
+  bucket_name = var.bucket_name
+  role_name   = module.cluster.service_account_role_name
 }
 
 module "addon" {

@@ -22,3 +22,8 @@ output "cluster_certificate_authority_data" {
   description = "The certificate-authority-data for the EKS cluster"
   value       = module.eks.cluster_certificate_authority_data
 }
+
+output "service_account_role_name" {
+  description = "The IAM role for the service account"
+  value       = aws_iam_role.service_account_role.name
+}
