@@ -37,14 +37,6 @@ attach-eks:
 	@echo "Attaching to EKS..."
 	@aws eks update-kubeconfig --region us-east-1 --name fastfood
 
-apply-kube:
-	@echo "Applying Kube..."
-	@kubectl apply -f k8s/echo-server.yaml
-
-destroy-kube:
-	@echo "Destroying Kube..."
-	@kubectl delete -f k8s/echo-server.yaml
-
 gen-tf-docs:
 	@echo "Generating Terraform Docs..."
 	@terraform-docs markdown table terraform

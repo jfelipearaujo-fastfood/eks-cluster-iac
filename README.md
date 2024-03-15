@@ -10,7 +10,9 @@
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | 5.38.0 |
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.12.1 |
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -20,7 +22,7 @@ No providers.
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | `"fastfood"` | no |
 | <a name="input_cluster_version"></a> [cluster\_version](#input\_cluster\_version) | The version of Kubernetes to use | `string` | `"1.29"` | no |
 | <a name="input_region"></a> [region](#input\_region) | The default region to use for AWS | `string` | `"us-east-1"` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | The default tags to use for AWS resources | `map(string)` | <pre>{<br>  "App": "cluster",<br>  "Blueprint": "cluster",<br>  "GithubRepo": "github.com/aws-ia/terraform-aws-eks-blueprints"<br>}</pre> | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | The default tags to use for AWS resources | `map(string)` | <pre>{<br>  "App": "cluster"<br>}</pre> | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | The CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |
 ## Modules
 
@@ -29,9 +31,13 @@ No providers.
 | <a name="module_addon"></a> [addon](#module\_addon) | ./modules/addon | n/a |
 | <a name="module_cluster"></a> [cluster](#module\_cluster) | ./modules/cluster | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
+| <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [helm_release.csi-secrets-store](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+| [helm_release.secrets-provider-aws](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 ## Outputs
 
 No outputs.
