@@ -77,4 +77,4 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Attach EKS
-        run: aws eks update-kubeconfig --region us-east-1 --name ${{ vars.CLUSTER_NAME }}
+        run: aws eks update-kubeconfig --region us-east-1 --name fastfood
