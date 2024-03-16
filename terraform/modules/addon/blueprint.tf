@@ -28,15 +28,11 @@ module "eks_blueprints_addons" {
       most_recent = true
     }
     vpc-cni = {
-      most_recent = true
-      # Specify the VPC CNI addon should be deployed before compute to ensure
-      # the addon is configured before data plane compute resources are created
-      # See README for further details
+      most_recent              = true
       service_account_role_arn = module.vpc_cni_irsa.iam_role_arn
       before_compute           = true
       configuration_values = jsonencode({
         env = {
-          # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
           ENABLE_PREFIX_DELEGATION = "true"
           WARM_PREFIX_TARGET       = "1"
         }
