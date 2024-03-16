@@ -40,3 +40,7 @@ attach-eks:
 gen-tf-docs:
 	@echo "Generating Terraform Docs..."
 	@terraform-docs markdown table terraform
+
+gen-cloud-diagrams:
+	@echo "Generating Cloud Diagrams..."
+	@cd docs && python3 cloud_aws_fast_food.py
