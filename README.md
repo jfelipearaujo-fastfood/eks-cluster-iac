@@ -1,5 +1,12 @@
 # Fast-Food k8s Cluster
 
+This project is responsible for provisioning a k8s cluster on AWS using EKS. The cluster is provisioned with a VPC, subnets, and security groups. The cluster is also provisioned with a storage class and a few addons.
+
+# Diagram of the complete infrastructure
+
+![diagram](./docs/cloud_aws_fast_food.png)
+
+# Provisioning
 <!-- BEGIN_TF_DOCS -->
 
 ## Requirements
