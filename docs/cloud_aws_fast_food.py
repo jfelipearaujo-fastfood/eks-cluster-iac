@@ -1,5 +1,5 @@
 from diagrams import Cluster, Diagram
-from diagrams.aws.compute import EKS
+from diagrams.aws.compute import EKS, Lambda
 from diagrams.aws.storage import S3
 from diagrams.aws.security import SecretsManager
 from diagrams.aws.management import SystemsManagerParameterStore as ParameterStore
@@ -46,12 +46,23 @@ with Diagram("Cloud AWS Fast Food", show=False, graph_attr=diagram_attr):
             users >> api_gateway
 
             with Cluster("Private Subnet", graph_attr=cluster_attr):
+                secrets_manager = SecretsManager("Secrets", **item_attr)
+                rds = RDS("RDS", **item_attr)
+
+                lambda_register = Lambda("Register", **item_attr)
+                lambda_register >> secrets_manager
+                lambda_register >> rds
+                api_gateway >> lambda_register
+
+                lambda_auth = Lambda("Auth", **item_attr)
+                lambda_auth >> secrets_manager
+                lambda_auth >> rds
+                api_gateway >> lambda_auth
+                
                 nlb = NLB("NLB", **item_attr)
                 api_gateway >> nlb
 
                 s3 = S3("S3", **item_attr)
-                secrets_manager = SecretsManager("Secrets", **item_attr)
-                rds = RDS("RDS", **item_attr)
 
                 service = EKS("EKS", **item_attr)
 
