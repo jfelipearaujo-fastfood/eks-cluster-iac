@@ -25,16 +25,6 @@ module "eks" {
   }
 }
 
-resource "kubernetes_namespace_v1" "namespace" {
-  metadata {
-    name = var.cluster_namespace
-  }
-
-  depends_on = [
-    module.eks
-  ]
-}
-
 resource "aws_iam_role" "service_account_role" {
   name = "${var.cluster_name}-service-account-role"
 
