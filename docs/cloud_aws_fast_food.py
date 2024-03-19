@@ -54,11 +54,16 @@ with Diagram("Cloud AWS Fast Food", show=False, graph_attr=diagram_attr):
                 lambda_register >> rds
                 api_gateway >> lambda_register
 
-                lambda_auth = Lambda("Auth", **item_attr)
-                lambda_auth >> secrets_manager
-                lambda_auth >> rds
-                api_gateway >> lambda_auth
-                
+                lambda_login = Lambda("Login", **item_attr)
+                lambda_login >> secrets_manager
+                lambda_login >> rds
+                api_gateway >> lambda_login
+
+                lambda_authorizer = Lambda("Authorizer", **item_attr)
+                lambda_authorizer >> secrets_manager
+                lambda_authorizer >> rds
+                api_gateway >> lambda_authorizer
+
                 nlb = NLB("NLB", **item_attr)
                 api_gateway >> nlb
 
