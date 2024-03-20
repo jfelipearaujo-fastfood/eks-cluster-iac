@@ -25,6 +25,10 @@ module "cluster" {
 module "storage" {
   source = "./modules/storage"
 
+  cluster_name         = var.cluster_name
+  namespace            = "fastfood"
+  service_account_name = "sa-fastfood"
+
   bucket_name = var.bucket_name
   role_name   = module.cluster.service_account_role_name
 }

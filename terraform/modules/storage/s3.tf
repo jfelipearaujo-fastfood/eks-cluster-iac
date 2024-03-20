@@ -15,7 +15,10 @@ resource "aws_iam_policy" "bucket_policy" {
           "s3:PutObject",
           "s3:DeleteObject"
         ],
-        Resource = "${data.aws_s3_bucket.bucket.arn}/app/images*",
+        Resource = [
+          "${data.aws_s3_bucket.bucket.arn}",
+          "${data.aws_s3_bucket.bucket.arn}/*",
+        ],
       },
     ],
   })
