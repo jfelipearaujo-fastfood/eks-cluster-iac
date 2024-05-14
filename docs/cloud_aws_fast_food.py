@@ -1,6 +1,5 @@
 from diagrams import Cluster, Diagram
 from diagrams.aws.compute import EKS, Lambda
-from diagrams.aws.storage import S3
 from diagrams.aws.security import SecretsManager
 from diagrams.aws.management import SystemsManagerParameterStore as ParameterStore
 from diagrams.aws.database import RDSPostgresqlInstance as RDS
@@ -8,6 +7,7 @@ from diagrams.aws.network import ElbNetworkLoadBalancer as NLB, APIGateway
 from diagrams.aws.security import WAF
 from diagrams.aws.general import Users
 from diagrams.k8s.compute import Pod
+from diagrams.onprem.database import Mongodb
 
 diagram_attr = {
     "fontsize": "25",
@@ -18,17 +18,17 @@ diagram_attr = {
 
 node_attr = {
     "fontsize": "20",
-    "size": "5",
+    "size": "6",
     "bgcolor": "white",
-    "margin": "0.5",
-    "height": "2.1",
-    "pad": "1"
+    "margin": "1",
+    "height": "3",
+    "pad": "5"
 }
 
 cluster_attr = {
     "fontsize": "20",
     "size": "5",
-    "margin": "8",
+    "margin": "18",
     "pad": "2"
 }
 
@@ -38,38 +38,48 @@ item_attr = {
 }
 
 with Diagram("Cloud AWS Fast Food", show=False, graph_attr=diagram_attr):    
-    users = Users("Users", **item_attr)
+    users = Users("Users")
 
-    with Cluster("AWS", graph_attr=cluster_attr):
-        with Cluster("VPC", graph_attr=cluster_attr):
-            api_gateway = APIGateway("Gateway", **item_attr)
+    with Cluster("AWS"):
+        with Cluster("VPC"):
+            api_gateway = APIGateway("API Gateway")
             users >> api_gateway
 
-            with Cluster("Private Subnet", graph_attr=cluster_attr):
-                secrets_manager = SecretsManager("Secrets", **item_attr)
-                rds = RDS("RDS", **item_attr)
-
-                lambda_register = Lambda("Register", **item_attr)
+            with Cluster("Private Subnet"):
+                lambda_register = Lambda("Register")
                 api_gateway >> lambda_register
 
-                lambda_login = Lambda("Login", **item_attr)
+                lambda_login = Lambda("Login")
                 api_gateway >> lambda_login
 
-                lambda_authorizer = Lambda("Authorizer", **item_attr)
+                lambda_authorizer = Lambda("Authorizer")
                 api_gateway >> lambda_authorizer
 
-                nlb = NLB("NLB", **item_attr)
+                nlb = NLB("NLB")
                 api_gateway >> nlb
 
-                s3 = S3("S3", **item_attr)
+                service = EKS("EKS")
 
-                service = EKS("EKS", **item_attr)
-
-                with Cluster("Cluster", graph_attr=cluster_attr):
+                with Cluster("Cluster"):
                     nlb >> service
 
-                    pod = Pod(**item_attr)
-                    pod >> s3
-                    pod >> secrets_manager
-                    pod >> rds
-                    service >> pod
+                    ms_product_catalog_pod = Pod("MS Product\nCatalog")
+                    ms_product_catalog_pod >> SecretsManager("Secrets")
+                    ms_product_catalog_pod >> Mongodb("Product\nCatalog")
+                    service >> ms_product_catalog_pod
+
+                    ms_order_pod = Pod("MS Order\nManagement")
+                    ms_order_pod >> SecretsManager("Secrets")
+                    ms_order_pod >> RDS("Orders DB")
+                    service >> ms_order_pod
+
+                    ms_payment_pod = Pod("MS Payment\nManagement")
+                    ms_payment_pod >> SecretsManager("Secrets")
+                    ms_payment_pod >> RDS("Payments DB")
+                    service >> ms_payment_pod
+
+                    ms_production_pod = Pod("MS Production\nManagement")
+                    ms_production_pod >> SecretsManager("Secrets")
+                    ms_production_pod >> RDS("Production DB")
+                    service >> ms_production_pod
+

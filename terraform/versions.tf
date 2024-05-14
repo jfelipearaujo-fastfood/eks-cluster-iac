@@ -10,6 +10,6 @@ terraform {
 
   backend "s3" {
     region = "us-east-1"
-    key    = "terraform/eks/terraform.tfstate"
+    key    = "terraform/eks-cluster-iac/terraform.tfstate"
   }
 }

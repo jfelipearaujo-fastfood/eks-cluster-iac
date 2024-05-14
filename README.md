@@ -1,6 +1,41 @@
-# Fast-Food k8s Cluster
+# EKS Cluster IaC
 
 This project is responsible for provisioning a k8s cluster on AWS using EKS. The cluster is provisioned with a VPC, subnets, and security groups. The cluster is also provisioned with a storage class and a few addons.
+
+# Local Development
+
+## Requirements
+
+- [Terraform](https://www.terraform.io/downloads.html)
+- [Terraform Docs](https://github.com/terraform-docs/terraform-docs)
+- [AWS CLI](https://aws.amazon.com/cli/)
+- [Python 3](https://www.python.org/downloads/)
+
+## Manual deployment
+
+### Attention
+
+Before deploying the cluster, make sure to set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables.
+
+Be aware that this process will take a few minutes (~20 minutes) to be completed.
+
+To deploy the cluster manually, run the following commands in order:
+
+```bash
+make init
+make check # this will execute fmt, validate and plan
+make apply
+```
+
+To destroy the cluster, run the following command:
+
+```bash
+make destroy
+```
+
+## Automated deployment
+
+The automated deployment is triggered by a GitHub Action.
 
 # Diagram of the complete infrastructure
 
@@ -19,7 +54,7 @@ This project is responsible for provisioning a k8s cluster on AWS using EKS. The
 
 | Name | Version |
 |------|---------|
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.12.1 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.13.2 |
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -38,7 +73,6 @@ This project is responsible for provisioning a k8s cluster on AWS using EKS. The
 | <a name="module_addon"></a> [addon](#module\_addon) | ./modules/addon | n/a |
 | <a name="module_cluster"></a> [cluster](#module\_cluster) | ./modules/cluster | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
-| <a name="module_storage"></a> [storage](#module\_storage) | ./modules/storage | n/a |
 ## Resources
 
 | Name | Type |

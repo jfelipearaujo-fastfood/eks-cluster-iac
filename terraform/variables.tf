@@ -8,8 +8,6 @@ variable "tags" {
   type        = map(string)
   default = {
     App = "cluster"
-    # Blueprint  = "cluster"
-    # GithubRepo = "github.com/aws-ia/terraform-aws-eks-blueprints"
   }
 }
 
