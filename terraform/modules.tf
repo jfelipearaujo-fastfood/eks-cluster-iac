@@ -13,10 +13,15 @@ module "cluster" {
 
   region = var.region
 
-  cluster_name                 = var.cluster_name
-  cluster_version              = var.cluster_version
-  cluster_namespace            = "fastfood"
-  cluster_service_account_name = "sa-fastfood"
+  cluster_name    = var.cluster_name
+  cluster_version = var.cluster_version
+
+  namespaces = [
+    "products",
+    "orders",
+    "payments",
+    "productions"
+  ]
 
   vpc_id          = module.network.vpc_id
   private_subnets = module.network.private_subnets
