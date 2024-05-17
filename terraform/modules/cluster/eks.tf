@@ -26,7 +26,9 @@ module "eks" {
 }
 
 resource "aws_iam_role" "service_account_role" {
-  name = "${var.cluster_name}-service-account-role"
+  for_each = { for ns in var.namespaces : ns => ns }
+
+  name = "${each.value}-service-account-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -40,7 +42,7 @@ resource "aws_iam_role" "service_account_role" {
         Condition = {
           StringEquals = {
             "${module.eks.oidc_provider}:aud" : "sts.amazonaws.com",
-            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:${var.cluster_namespace}:${var.cluster_service_account_name}"
+            "${module.eks.oidc_provider}:sub" : "system:serviceaccount:ns-${each.value}:sa-${each.value}"
           }
         }
       },
