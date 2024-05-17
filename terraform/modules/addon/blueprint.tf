@@ -9,7 +9,8 @@ module "eks_blueprints_addons" {
 
   enable_metrics_server               = true
   enable_aws_efs_csi_driver           = true
-  enable_aws_load_balancer_controller = true
+  enable_aws_load_balancer_controller = false
+  enable_ingress_nginx                = true
 
   eks_addons = {
     aws-ebs-csi-driver = {
