@@ -20,7 +20,8 @@ module "cluster" {
     "products",
     "orders",
     "payments",
-    "productions"
+    "productions",
+    "customers"
   ]
 
   vpc_id          = module.network.vpc_id
