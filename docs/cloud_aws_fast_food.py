@@ -3,7 +3,7 @@ from diagrams.aws.compute import EKS, Lambda
 from diagrams.aws.security import SecretsManager
 from diagrams.aws.management import SystemsManagerParameterStore as ParameterStore
 from diagrams.aws.database import RDSPostgresqlInstance as RDS
-from diagrams.aws.network import ElbNetworkLoadBalancer as NLB, APIGateway
+from diagrams.aws.network import ElbClassicLoadBalancer as CLB, APIGateway
 from diagrams.aws.security import WAF
 from diagrams.aws.general import Users
 from diagrams.k8s.compute import Pod
@@ -60,13 +60,13 @@ with Diagram("Cloud AWS Fast Food", show=False, graph_attr=diagram_attr):
                 lambda_authorizer = Lambda("Authorizer")
                 api_gateway >> lambda_authorizer
 
-                nlb = NLB("NLB")
-                lambda_authorizer >> nlb
+                elb = CLB("ELB")
+                lambda_authorizer >> elb
 
                 service = EKS("EKS")
 
                 with Cluster("Cluster"):
-                    nlb >> service
+                    elb >> service
 
                     ingress = Ingress("Ingress")
                     service >> ingress
