@@ -17,6 +17,7 @@ module "cluster" {
   cluster_version = var.cluster_version
 
   namespaces = [
+    "customers",
     "products",
     "orders",
     "payments",
