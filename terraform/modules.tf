@@ -17,11 +17,11 @@ module "cluster" {
   cluster_version = var.cluster_version
 
   namespaces = [
+    "customers",
     "products",
     "orders",
     "payments",
-    "productions",
-    "customers"
+    "productions"
   ]
 
   vpc_id          = module.network.vpc_id

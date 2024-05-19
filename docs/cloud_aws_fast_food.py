@@ -8,6 +8,7 @@ from diagrams.aws.security import WAF
 from diagrams.aws.general import Users
 from diagrams.k8s.compute import Pod
 from diagrams.onprem.database import Mongodb
+from diagrams.k8s.network import Ingress
 
 diagram_attr = {
     "fontsize": "25",
@@ -46,40 +47,47 @@ with Diagram("Cloud AWS Fast Food", show=False, graph_attr=diagram_attr):
             users >> api_gateway
 
             with Cluster("Private Subnet"):
+                customers_db = RDS("Customers DB")
+
                 lambda_register = Lambda("Register")
                 api_gateway >> lambda_register
+                lambda_register >> customers_db
 
                 lambda_login = Lambda("Login")
                 api_gateway >> lambda_login
+                lambda_login >> customers_db
 
                 lambda_authorizer = Lambda("Authorizer")
                 api_gateway >> lambda_authorizer
 
                 nlb = NLB("NLB")
-                api_gateway >> nlb
+                lambda_authorizer >> nlb
 
                 service = EKS("EKS")
 
                 with Cluster("Cluster"):
                     nlb >> service
 
+                    ingress = Ingress("Ingress")
+                    service >> ingress
+
                     ms_product_catalog_pod = Pod("MS Product\nCatalog")
                     ms_product_catalog_pod >> SecretsManager("Secrets")
                     ms_product_catalog_pod >> Mongodb("Product\nCatalog")
-                    service >> ms_product_catalog_pod
+                    ingress >> ms_product_catalog_pod
 
                     ms_order_pod = Pod("MS Order\nManagement")
                     ms_order_pod >> SecretsManager("Secrets")
                     ms_order_pod >> RDS("Orders DB")
-                    service >> ms_order_pod
+                    ingress >> ms_order_pod
 
                     ms_payment_pod = Pod("MS Payment\nManagement")
                     ms_payment_pod >> SecretsManager("Secrets")
                     ms_payment_pod >> RDS("Payments DB")
-                    service >> ms_payment_pod
+                    ingress >> ms_payment_pod
 
                     ms_production_pod = Pod("MS Production\nManagement")
                     ms_production_pod >> SecretsManager("Secrets")
                     ms_production_pod >> RDS("Production DB")
-                    service >> ms_production_pod
+                    ingress >> ms_production_pod
 
