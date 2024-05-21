@@ -3,6 +3,11 @@ variable "vpc_id" {
   description = "The ID of the VPC"
 }
 
+variable "vpc_cidr" {
+  type        = string
+  description = "The CIDR block for the VPC"
+}
+
 variable "cluster_name" {
   type        = string
   description = "The name of the EKS cluster"
