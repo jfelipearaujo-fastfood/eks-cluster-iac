@@ -34,7 +34,8 @@ module "addon" {
   cluster_name    = var.cluster_name
   cluster_version = var.cluster_version
 
-  vpc_id = module.network.vpc_id
+  vpc_id   = module.network.vpc_id
+  vpc_cidr = var.vpc_cidr
 
   cluster_endpoint  = module.cluster.cluster_endpoint
   oidc_provider_arn = module.cluster.oidc_provider_arn
