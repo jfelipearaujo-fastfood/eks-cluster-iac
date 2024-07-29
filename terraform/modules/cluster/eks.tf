@@ -16,10 +16,10 @@ module "eks" {
   eks_managed_node_groups = {
     group = {
       name           = "workers"
-      instance_types = ["t3.medium"]
+      instance_types = ["t3.large"]
 
       min_size     = 1
-      max_size     = 5
+      max_size     = 15
       desired_size = 1
     }
   }
@@ -48,23 +48,4 @@ resource "aws_iam_role" "service_account_role" {
       },
     ]
   })
-}
-
-module "fargate_profile" {
-  source  = "terraform-aws-modules/eks/aws//modules/fargate-profile"
-  version = "20.5.2"
-
-  name         = "apps-fargate-profile"
-  cluster_name = module.eks.cluster_name
-
-  subnet_ids = var.private_subnets
-
-  selectors = [{
-    namespace = "ns-products-ec2"
-  }]
-
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
 }
