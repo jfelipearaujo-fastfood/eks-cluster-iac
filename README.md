@@ -9,7 +9,6 @@ This project is responsible for provisioning a k8s cluster on AWS using EKS. The
 - [Terraform](https://www.terraform.io/downloads.html)
 - [Terraform Docs](https://github.com/terraform-docs/terraform-docs)
 - [AWS CLI](https://aws.amazon.com/cli/)
-- [Python 3](https://www.python.org/downloads/)
 
 ## Manual deployment
 
@@ -39,7 +38,7 @@ The automated deployment is triggered by a GitHub Action.
 
 # Diagram of the complete infrastructure
 
-![diagram](./docs/cloud_aws_fast_food.png)
+![diagram](./docs/architecture.png)
 
 # Provisioning
 <!-- BEGIN_TF_DOCS -->
