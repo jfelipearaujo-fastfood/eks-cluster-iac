@@ -40,6 +40,14 @@ The automated deployment is triggered by a GitHub Action.
 
 ![diagram](./docs/architecture.png)
 
+# Saga Choreographed
+
+![diagram](./docs/saga.png)
+
+# Saga Choreographed with compensation flow
+
+![diagram](./docs/saga_compensation.png)
+
 # Provisioning
 <!-- BEGIN_TF_DOCS -->
 
